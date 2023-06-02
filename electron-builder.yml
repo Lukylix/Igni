@@ -1,0 +1,46 @@
+appId: com.igni.app
+productName: igni
+directories:
+  buildResources: build
+files:
+  - '!**/.vscode/*'
+  - '!src/*'
+  - '!electron.vite.config.{js,ts,mjs,cjs}'
+  - '!{.eslintignore,.eslintrc.cjs,.prettierignore,.prettierrc.yaml,dev-app-update.yml,CHANGELOG.md,README.md}'
+  - '!{.env,.env.*,.npmrc,pnpm-lock.yaml}'
+asarUnpack:
+  - resources/*
+afterSign: build/notarize.js
+win:
+  executableName: igni
+  icon: ./build/iconOn256.ico
+nsis:
+  artifactName: ${name}-${version}-setup.${ext}
+  shortcutName: ${productName}
+  uninstallDisplayName: ${productName}
+  createDesktopShortcut: always
+dmg:
+  artifactName: ${name}-${version}.${ext}
+linux:
+  target:
+    - AppImage
+    - snap
+    - deb
+  maintainer: lukylix
+  category: Utility
+  icon: ./build/iconOn512.png
+  extraResources:
+    - from: resources
+      to: resources
+snap:
+  summary: An automated time tracker
+  description: This monitoring software recognizes actions through keyboard strokes and mouse movements, subsequently recording the time associated with each project.
+  grade: stable
+  confinement: classic
+appImage:
+  artifactName: ${name}-${version}.${ext}
+
+npmRebuild: false
+# publish:
+#   provider: generic
+#   url: https://example.com/auto-updates

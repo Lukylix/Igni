@@ -1,0 +1,29 @@
+.nav {
+  display: flex;
+  width: min-content;
+  justify-content: flex-end;
+  width: min-content;
+  gap: 5px;
+  padding: 5px 5px 0 0;
+  text-align: center;
+  align-items: center;
+}
+
+.header {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  position: fixed;
+  width: 100%;
+  z-index: 1000;
+  top: 0;
+}
+
+.dragable {
+  -webkit-app-region: drag;
+  -webkit-user-select: none;
+
+  height: 20px;
+}
+.main > .container {
+  margin-top: 30px;
+}
