@@ -4,8 +4,6 @@ import flame2 from '../../assets/flame/2-grey.png'
 import flame3 from '../../assets/flame/3-grey.png'
 import flame4 from '../../assets/flame/4-grey.png'
 import clouds from '../../assets/clouds.png'
-import IgnitOnIcon from '../../assets/iconOn256.png'
-import IgnitOffIcon from '../../assets/iconOff256.png'
 import bloop from '../../assets/bloop.png'
 
 import './home.css'
@@ -149,7 +147,7 @@ function Home() {
           onClick={() => {
             setCliked(true)
             setIsIgnited(!isIgnited)
-            ipcRenderer.send('ignit', { isIgnited: !isIgnited, schedule })
+            setTimeout(ipcRenderer.send('ignit', { isIgnited: !isIgnited, schedule }), 500)
           }}
         >
           <img
