@@ -29,11 +29,11 @@ Igni offers more methods for you to wield your power over time and device shutdo
 
 Remember, you can always press the orb to adjust or cancel your scheduled shutdown.
 
-## Extra Powers: Quick Time Manipulation 🧙‍♂️
+## 🧙‍♂️ Extra Powers: Quick Time Manipulation
 
 In the Igni realm, you hold greater powers than you may have initially believed. Discover these enhanced abilities to truly unlock your prowess in managing time and system shutdowns.
 
-## 🎲 Quick Spell Casting: Direct Time Input
+### 🎲 Quick Spell Casting: Direct Time Input
 
 For those who wish to manipulate time with precision and agility:
 
@@ -45,7 +45,7 @@ For those who wish to manipulate time with precision and agility:
 
 This technique allows you to control the flow of time accurately, ensuring the system hibernation obeys your exact command.
 
-## 🖲️ Scroll of Time Adjustment
+### 🖲️ Scroll of Time Adjustment
 
 For those who wish to adjust the flow of time in a seamless and effortless manner:
 
