@@ -15,7 +15,7 @@ body {
 
 #root {
   min-height: calc(100vh);
-  padding-top: 20px;
+  padding-top: 30px;
   display: grid;
   grid-template-rows: 1fr;
   background: url(./assets/background.gif) no-repeat center center fixed;

@@ -12,11 +12,12 @@ function createWindow() {
   else if (process.platform === 'linux') icon = path.join(__dirname, '../../build/iconOn512.png')
   const display = electron.screen.getPrimaryDisplay()
   const { width, height } = display.workAreaSize
+  const [x, y] = store.get('windowPosition') || []
   const mainWindow = new electron.BrowserWindow({
     width: 300,
     height: 500,
-    x: width - 300,
-    y: height - 500,
+    x: x ? x : width - 300,
+    y: y ? y : height - 500,
     show: false,
     autoHideMenuBar: true,
     frame: false,
@@ -136,11 +137,15 @@ function createWindow() {
     // }µ
     if (isIgnited) {
       exec(`shutdown -s -t ${schedule * 60}`)
-      store.set('settings', { isIgnited, schedule: Date.now() + schedule * 60 * 1000 })
+      store.set('settings', {
+        isIgnited,
+        schedule: Date.now() + schedule * 60 * 1000,
+        lastSchedule: schedule
+      })
       isIgnitedStore = true
     } else {
       exec('shutdown -a')
-      store.set('settings', { isIgnited, schedule: null })
+      store.set('settings', { isIgnited, schedule: null, lastSchedule: null })
       isIgnitedStore = false
     }
   })
@@ -148,6 +153,11 @@ function createWindow() {
     store.set('settings', data)
   })
   electron.ipcMain.handle('load-settings', async (event, data) => {
+    const settings = store.get('settings')
+    if (settings.schedule < Date.now()) {
+      store.set('settings', { isIgnited: false, schedule: null })
+      return { isIgnited: false, schedule: null }
+    }
     return store.get('settings')
   })
   electron.ipcMain.on('minimize-event', async (event) => {
@@ -170,7 +180,12 @@ function createWindow() {
     mainWindow.close()
   })
   if (startMinimized) tray = createTray()
+
+  mainWindow.on('moved', (event, data) => {
+    store.set('windowPosition', mainWindow.getPosition())
+  })
 }
+
 electron.app.whenReady().then(() => {
   utils.electronApp.setAppUserModelId('com.electron')
   electron.app.on('browser-window-created', (_, window) => {

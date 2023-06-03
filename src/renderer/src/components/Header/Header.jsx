@@ -9,7 +9,6 @@ import { memo, useCallback } from 'react'
 const Header = memo(() => {
   const minimize = useCallback(() => ipcRenderer.send('minimize-event'), [])
   const close = useCallback(() => ipcRenderer.send('close-event'), [])
-
   return (
     <div className="header">
       <div className="dragable"></div>

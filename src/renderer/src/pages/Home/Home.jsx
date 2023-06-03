@@ -1,8 +1,8 @@
 import rondin from '../../assets/rondin.png'
-import flame1 from '../../assets/flame/1-grey.png'
-import flame2 from '../../assets/flame/2-grey.png'
-import flame3 from '../../assets/flame/3-grey.png'
-import flame4 from '../../assets/flame/4-grey.png'
+import flame1 from '../../assets/flame/1-no-stroke.png'
+import flame2 from '../../assets/flame/2-no-stroke.png'
+import flame3 from '../../assets/flame/3-no-stroke.png'
+import flame4 from '../../assets/flame/4-no-stroke.png'
 import clouds from '../../assets/clouds.png'
 import bloop from '../../assets/bloop.png'
 
@@ -27,28 +27,40 @@ function Home() {
   const [lastInputTime, setLastInputTime] = useState(0)
   const [cliked, setCliked] = useState(false)
   const [shloudRerender, setShloudRerender] = useState(false)
+  const [scheduleTime, setScheduleTime] = useState(0)
+  const [currentTime, setCurrentTime] = useState(Date.now())
 
+  useEffect(() => {
+    console.log('schedule time', scheduleTime)
+  }, [scheduleTime])
   useEffect(() => {
     if (cliked) setTimeout(() => setCliked(false), 500)
   }, [cliked])
 
   useEffect(() => {
+    const iterval = setInterval(() => setCurrentTime(Date.now()), 1000)
+    return () => clearInterval(iterval)
+  }, [])
+
+  useEffect(() => {
     ;(async () => {
       const settings = await ipcRenderer.invoke('load-settings')
-      console.log('settings', settings)
       setIsIgnited(settings?.isIgnited)
-
+      setScheduleTime(settings?.schedule)
+      setSchedule(settings?.lastSchedule)
       setSchedule(settings.schedule - Date.now() > 0 ? settings.schedule - Date.now() : 0)
     })()
   }, [])
 
   const flamePowerOfSchedule = useMemo(() => {
-    if (schedule > 120) return 1
-    else if (schedule > 90) return 2
-    else if (schedule > 60) return 3
-    else if (schedule > 30) return 4
+    let choosedSchedule = schedule
+    if (isIgnited) choosedSchedule = parseInt((scheduleTime - currentTime) / 1000 / 60)
+    if (choosedSchedule > 120) return 1
+    else if (choosedSchedule > 90) return 2
+    else if (choosedSchedule > 60) return 3
+    else if (choosedSchedule > 30) return 4
     return 4
-  }, [schedule])
+  }, [schedule, currentTime, isIgnited, scheduleTime])
 
   const handleWeel = (e) => {
     if (isIgnited) return
@@ -71,7 +83,9 @@ function Home() {
   }
 
   const handleMouseMove = (e) => {
-    if (!isClicked || isIgnited) return
+    if (!isClicked) return
+    setLastInputTime(Date.now())
+    if (isIgnited) return
     const windowHeight = window.innerHeight
 
     const elmentHeight = e.target.getBoundingClientRect().height
@@ -80,7 +94,6 @@ function Home() {
     const newY = elmentHeight - (y - (windowHeight - elmentHeight))
     const newSchedule = newY - initalMouseY + initialSchedule
     setSchedule(newSchedule > 0 ? newSchedule : 0)
-    setLastInputTime(Date.now())
   }
 
   const flames = useMemo(() => [flame1, flame2, flame3, flame4], [])
@@ -142,20 +155,23 @@ function Home() {
         </div>
         <img src={rondin} alt="rondin" className="rondin" />
         {!(Date.now() - lastInputTime > 3000) && (
-          <h1 className="schedule">{prettyTimePrint(schedule)}</h1>
+          <h1 className="schedule">
+            {prettyTimePrint(
+              isIgnited ? parseInt((scheduleTime - Date.now()) / 1000 / 60) : schedule
+            )}
+          </h1>
         )}
-
         <div className="glass"></div>
         <div className="halo-icon-container">
-          <div
-            className={`halo-icon ${isIgnited ? 'ignited' : ''}`}
-            style={{ height: haloSize.halo1 * 0.2, width: haloSize.halo1 * 0.2 }}
-          />
+          <div className={`halo-icon ${!isIgnited ? 'not-ignited' : ''}`} />
         </div>
         <div
           className="icon-container"
           onClick={() => {
             setCliked(true)
+            setLastInputTime(Date.now())
+            if (schedule == 0) return
+            !isIgnited ? setScheduleTime(Date.now() + schedule * 1000 * 60) : setScheduleTime(0)
             setIsIgnited(!isIgnited)
             setTimeout(() => ipcRenderer.send('ignit', { isIgnited: !isIgnited, schedule }), 500)
           }}
@@ -163,8 +179,12 @@ function Home() {
           <img
             src={bloop}
             alt="Ignit Off Icon"
-            height={40}
-            className={`icon ${cliked ? 'clicked' : ''} `}
+            className={`icon ${isIgnited ? 'ignited' : ''} ${cliked ? 'clicked' : ''} `}
+          />
+          <img
+            src={bloop}
+            alt="Ignit Off Icon"
+            className={`icon icon-top ${isIgnited ? 'ignited' : ''} ${cliked ? 'clicked' : ''} `}
           />
           <div className="glass"></div>
         </div>
