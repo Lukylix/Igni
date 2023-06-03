@@ -1,6 +1,6 @@
 {
-  "name": "ignit",
-  "version": "0.1.1",
+  "name": "igni",
+  "version": "0.1.2",
   "description": "An app to shutdown your computer after a certain time",
   "main": "./out/main/index.js",
   "author": "lukylix",

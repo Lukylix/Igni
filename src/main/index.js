@@ -126,6 +126,7 @@ function createWindow() {
     event.returnValue = display.workAreaSize
   })
 
+  let isIgnitedStore = false
   electron.ipcMain.on('ignit', async (event, data) => {
     const { isIgnited, schedule } = data
     // if (!isIgnited) {
@@ -135,17 +136,24 @@ function createWindow() {
     // }µ
     if (isIgnited) {
       exec(`shutdown -s -t ${schedule * 60}`)
+      store.set('settings', { isIgnited, schedule: Date.now() + schedule * 60 * 1000 })
+      isIgnitedStore = true
     } else {
       exec('shutdown -a')
+      store.set('settings', { isIgnited, schedule: null })
+      isIgnitedStore = false
     }
   })
   electron.ipcMain.on('save-settings', async (event, data) => {
     store.set('settings', data)
   })
+  electron.ipcMain.handle('load-settings', async (event, data) => {
+    return store.get('settings')
+  })
   electron.ipcMain.on('minimize-event', async (event) => {
     event.preventDefault()
     mainWindow.hide()
-    tray = createTray()
+    tray = createTray(isIgnitedStore ? true : false)
   })
   electron.ipcMain.on('restore', async (event) => {
     mainWindow.show()

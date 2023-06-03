@@ -32,6 +32,16 @@ function Home() {
     if (cliked) setTimeout(() => setCliked(false), 500)
   }, [cliked])
 
+  useEffect(() => {
+    ;(async () => {
+      const settings = await ipcRenderer.invoke('load-settings')
+      console.log('settings', settings)
+      setIsIgnited(settings?.isIgnited)
+
+      setSchedule(settings.schedule - Date.now() > 0 ? settings.schedule - Date.now() : 0)
+    })()
+  }, [])
+
   const flamePowerOfSchedule = useMemo(() => {
     if (schedule > 120) return 1
     else if (schedule > 90) return 2
@@ -147,7 +157,7 @@ function Home() {
           onClick={() => {
             setCliked(true)
             setIsIgnited(!isIgnited)
-            setTimeout(ipcRenderer.send('ignit', { isIgnited: !isIgnited, schedule }), 500)
+            setTimeout(() => ipcRenderer.send('ignit', { isIgnited: !isIgnited, schedule }), 500)
           }}
         >
           <img
