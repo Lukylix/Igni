@@ -25,7 +25,39 @@ The Igni realm is as immersive as it is intuitive. The pixel art UI will transpo
 3. Ignite:  
    Once satisfied, press the floating orb. Watch as your Igni assistant, invoke the spell, finalizing your shutdown schedule.
 
+Igni offers more methods for you to wield your power over time and device shutdown. Explore these additional features to fully master the power of Igni.
+
 Remember, you can always press the orb to adjust or cancel your scheduled shutdown.
+
+## Extra Powers: Quick Time Manipulation 🧙‍♂️
+
+In the Igni realm, you hold greater powers than you may have initially believed. Discover these enhanced abilities to truly unlock your prowess in managing time and system shutdowns.
+
+## 🎲 Quick Spell Casting: Direct Time Input
+
+For those who wish to manipulate time with precision and agility:
+
+1. **Double Tap the Campfire:**  
+   A double tap on the mystic campfire will summon a dialog box where the power to manipulate time lies.
+
+2. **Invoke the Time Spell:**  
+   Add wood to your fire in the given boxes.
+
+This technique allows you to control the flow of time accurately, ensuring the system hibernation obeys your exact command.
+
+## 🖲️ Scroll of Time Adjustment
+
+For those who wish to adjust the flow of time in a seamless and effortless manner:
+
+1. **Hover Over the Campfire:**  
+   Direct your cursor to hover above the enchanted campfire.
+
+2. **Manipulate Time:**  
+   Turning the mouse wheel upward will bend time, increasing the duration before shutdown. Conversely, turning it downward will hasten time, reducing the shutdown countdown.
+
+This scroll enchantment offers a quick and fluid way to control the system's power, allowing you to adapt and respond to changing circumstances swiftly.
+
+With these additional mystical powers in your possession, your journey towards power mastery in the Igni realm becomes even more thrilling. Remember, you command the flow of time and energy. Happy adventuring, time mage!
 
 ## 🔥 Time Before a Shutdown
 
