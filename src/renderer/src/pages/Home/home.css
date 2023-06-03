@@ -267,3 +267,112 @@ h1 {
     transform: translate(-50%, -50%) scale(1.025);
   }
 }
+
+.inputs-container {
+  position: absolute;
+  top: 100px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  gap: 5px;
+  padding-inline: 10px;
+}
+
+.input-container {
+  width: 100%;
+}
+
+.input-container label {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+
+  font-size: 0px;
+  color: transparent;
+  height: 33px;
+  width: 49px;
+  z-index: 1;
+}
+
+.inputs-container .box {
+  width: 100%;
+}
+
+.inputs-container input {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  height: 33px;
+  padding: 0;
+  margin: 0;
+  font-size: 0px;
+  text-align: end;
+  width: 49px;
+
+  background-color: transparent;
+  font-family: 'Minecraft';
+  border: 1px solid #000000;
+  border-radius: 1px;
+  outline: none;
+  color: transparent;
+}
+
+.input-container input:focus {
+  outline: none;
+}
+
+.input-container .glass {
+  position: absolute;
+  top: 0;
+}
+
+.inputs-container .input-value {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  height: 33px;
+  line-height: 55px;
+  padding: 0;
+  margin: 0;
+  font-size: 30px;
+  text-align: end;
+  width: 49px;
+  background-color: transparent;
+  font-family: 'Minecraft';
+
+  outline: none;
+  color: white;
+  pointer-events: none;
+}
+
+input[type='number'] {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+/* hide cursor blink */
+
+input[type='number']::-webkit-inner-spin-button,
+input[type='number']::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.log,
+.twig,
+.stick {
+  position: absolute;
+  bottom: 11px;
+  right: -13px;
+  height: 32px;
+  width: 32px;
+  transform: translateX(-50%);
+}
+
+.twig {
+  right: -14px;
+  bottom: 12px;
+}

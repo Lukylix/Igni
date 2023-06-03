@@ -9,7 +9,8 @@ body {
   display: flex;
   flex-direction: column;
   font-family: 'Minecraft';
-  color: #ffdc18;
+  color: white;
+
   background-color: #2f3241;
 }
 

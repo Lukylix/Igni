@@ -135,6 +135,7 @@ function createWindow() {
     // } else {
     //   shutdown.abort()
     // }µ
+    const settings = store.get('settings')
     if (isIgnited) {
       exec(`shutdown -s -t ${schedule * 60}`)
       store.set('settings', {
@@ -145,12 +146,16 @@ function createWindow() {
       isIgnitedStore = true
     } else {
       exec('shutdown -a')
-      store.set('settings', { isIgnited, schedule: null, lastSchedule: null })
+      store.set('settings', { isIgnited, schedule: null, lastSchedule: settings.lastSchedule })
       isIgnitedStore = false
     }
   })
   electron.ipcMain.on('save-settings', async (event, data) => {
-    store.set('settings', data)
+    const settings = store.get('settings')
+    const { isIgnited, schedule, lastSchedule } = data
+    if (isIgnited !== undefined) settings.isIgnited = isIgnited
+    if (schedule !== undefined) settings.schedule = schedule
+    if (lastSchedule !== undefined) settings.lastSchedule = lastSchedule
   })
   electron.ipcMain.handle('load-settings', async (event, data) => {
     const settings = store.get('settings')

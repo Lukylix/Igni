@@ -1,4 +1,4 @@
-# Welcome adventurer,
+# Welcome adventurer, 🍻
 
 Welcome to the realm of Igni, a pixel art-style mobile application tailored to help you seamlessly schedule system shutdowns. With Igni, your quest for better power management and digital health is only a fingertip away. Dive into the world of pixel art while ensuring no more unnecessary power usage. Let Igni guide your journey towards an energy-efficient digital life.
 
@@ -12,7 +12,7 @@ The Igni realm is as immersive as it is intuitive. The pixel art UI will transpo
 
 ### Screenshots
 
-<img src="./screenshot.png" width="200px"/>
+<img src="./screenshot.png" width="200px">
 
 ## ⚙️ How to Schedule a Shutdown
 
@@ -26,6 +26,20 @@ The Igni realm is as immersive as it is intuitive. The pixel art UI will transpo
    Once satisfied, press the floating orb. Watch as your Igni assistant, invoke the spell, finalizing your shutdown schedule.
 
 Remember, you can always press the orb to adjust or cancel your scheduled shutdown.
+
+## 🔥 Time Before a Shutdown
+
+The magical flame within Igni serves as a visual representation of the remaining time before a scheduled shutdown. This feature transforms the mundanity of waiting into an engaging, visually satisfying experience. Here's how it works:
+
+1. **5 Minutes Remaining - Low Flame:** When there are only five minutes left until the scheduled shutdown, the flame within Igni flickers low and slow, reminding you of the impending shutdown.
+
+2. **30 Minutes Remaining** - Medium Flame: As the countdown reaches the 30-minute mark, the flame grows to a medium size, indicating that half an hour remains before your device rests.
+
+3. **60 Minutes Remaining** - Larger Flame: At the 60-minute mark, the flame swells even larger. This is Igni's way of alerting you that there's still one hour left before shutdown.
+
+4. **More Than 60 Minutes Remaining** - Max Flame: When the countdown is superior at 60 minutes, the flame within Igni is at its maximum size. It's a visual cue that you have 1 hours or more of activity left before your device starts its well-deserved break.
+
+The flame's size provides an intuitive and visually appealing indication of the remaining time, helping you plan and prepare accordingly. Now, managing your device's shutdown schedule will feel just like playing your favorite pixel art MMO RPG!
 
 ## 🌠 Pixel Art Style Graphics
 
