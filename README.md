@@ -4,7 +4,7 @@ Welcome to the realm of Igni, a pixel art-style mobile application tailored to h
 
 ## 🎮 Getting Started
 
-To initiate your journey, install Igni from your respective app store. Boot up the app, and let the adventure towards effective power management commence.
+To initiate your journey, install Igni from the [release page](https://github.com/Lukylix/Igni/releases). Boot up the app, and let the adventure towards effective power management commence.
 
 ## 🗺️ How to Navigate
 
