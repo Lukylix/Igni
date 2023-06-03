@@ -10,6 +10,10 @@ To initiate your journey, install Igni from your respective app store. Boot up t
 
 The Igni realm is as immersive as it is intuitive. The pixel art UI will transport you into a world reminiscent of your favorite RPGs, making navigation an adventure in itself.
 
+### Screenshots
+
+<img src="./screenshot.png" width="200px"/>
+
 ## ⚙️ How to Schedule a Shutdown
 
 1. Select the Campire:  
