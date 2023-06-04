@@ -1,8 +1,9 @@
+import { memo } from 'react'
 import bloop from '../../assets/bloop.png'
 
 import './bloop.css'
 
-export default function Bloop({ isIgnited, igniteToggle, cliked }) {
+const Bloop = memo(({ isIgnited, igniteToggle, cliked }) => {
   return (
     <>
       <div className="halo-icon-container">
@@ -23,4 +24,6 @@ export default function Bloop({ isIgnited, igniteToggle, cliked }) {
       </div>
     </>
   )
-}
+})
+
+export default Bloop
