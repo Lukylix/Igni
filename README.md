@@ -1,6 +1,6 @@
 # Welcome adventurer, 🍻
 
-Welcome to the realm of Igni, a pixel art-style mobile application tailored to help you seamlessly schedule system shutdowns. With Igni, your quest for better power management and digital health is only a fingertip away. Dive into the world of pixel art while ensuring no more unnecessary power usage. Let Igni guide your journey towards an energy-efficient digital life.
+Welcome to the realm of Igni, a pixel art-style application tailored to help you seamlessly schedule system shutdowns. With Igni, your quest for better power management and digital health is only a fingertip away. Dive into the world of pixel art while ensuring no more unnecessary power usage. Let Igni guide your journey towards an energy-efficient digital life.
 
 ## 🎮 Getting Started
 
