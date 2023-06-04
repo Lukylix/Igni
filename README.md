@@ -90,3 +90,15 @@ Should you encounter any dragons or need assistance navigating through Igni's wo
 Igni continuously evolves, receiving regular updates to improve your experience, introduce new features, and vanquish any bugs.
 
 With this guide, we hope you're ready to embark on your quest with Igni. Brace yourself for a unique adventure in power management. Happy adventuring!
+
+## 🤝 Contributors
+
+<div style="display: flex; gap: 10px">
+<a href="https://github.com/Lukylix">
+<img src="https://avatars.githubusercontent.com/u/21231894?v=4" style="border-radius: 50%; height:100px">
+</a>
+
+<a href="">
+<img src="https://avatars.githubusercontent.com/u/135474080?v=4" style="border-radius: 50%; height:100px">
+</a>
+<div>
