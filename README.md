@@ -98,7 +98,7 @@ With this guide, we hope you're ready to embark on your quest with Igni. Brace y
 <img src="https://avatars.githubusercontent.com/u/21231894?v=4" style="border-radius: 50%; height:100px">
 </a>
 
-<a href="">
+<a href="https://twitter.com/bowirn">
 <img src="https://avatars.githubusercontent.com/u/135474080?v=4" style="border-radius: 50%; height:100px">
 </a>
 <div>
