@@ -13,13 +13,9 @@ export default function useIgniLogic() {
   const [initialSchedule, setInitialSchedule] = useState(0)
   const [isIgnited, setIsIgnited] = useState(false)
   const [lastInputTime, setLastInputTime] = useState(0)
-  const [cliked, setCliked] = useState(false)
-  const [shloudRerender, setShloudRerender] = useState(false)
+  const [clikedCampfire, setClikedCampfire] = useState(false)
   const [scheduleTime, setScheduleTime] = useState(0)
   const [currentTime, setCurrentTime] = useState(Date.now())
-  const [days, setDays] = useState(0)
-  const [hours, setHours] = useState(0)
-  const [minutes, setMinutes] = useState(0)
   const [clickedInput, setClickedInput] = useState(false)
   const [shouldDisplayTime, setShouldDisplayTime] = useState(false)
   const [inputDaysFocused, setInputDaysFocused] = useState(false)
@@ -27,7 +23,8 @@ export default function useIgniLogic() {
   const [inputMinutesFocused, setInputMinutesFocused] = useState(false)
 
   const igniteToggle = useCallback(() => {
-    setCliked(true)
+    setClikedCampfire(true)
+    setTimout(() => setClikedCampfire(false), 3000)
     setLastInputTime(Date.now())
     if (schedule == 0) return
     !isIgnited ? setScheduleTime(Date.now() + schedule * 1000 * 60) : setScheduleTime(0)
@@ -35,72 +32,48 @@ export default function useIgniLogic() {
     setTimeout(() => ipcRenderer.send('ignit', { isIgnited: !isIgnited, schedule }), 500)
   }, [schedule, isIgnited])
 
-  const onChangeMinutes = useCallback(
-    (e) => {
+  const onChange = useCallback(
+    (e, type) => {
       let value = parseInt(e?.target?.value)
       if (!value) value = 0
-
-      setSchedule(
-        (days + parseInt((hours + (parseInt(value / 60) % 24)) / 24)) * 1440 +
-          (hours + (parseInt(value / 60) % 24)) * 60 +
-          (value % 60)
-      )
-      setHours((hours + parseInt(value / 60)) % 24)
-      setDays((days + parseInt((hours + parseInt(value / 60)) / 24)) % 99)
-      setMinutes(value % 60)
+      const days = parseInt(schedule / 1440)
+      const hours = parseInt((schedule - days * 1440) / 60)
+      const minutes = schedule % 60
+      if (type === 'days') setSchedule(value * 1440 + hours * 60 + minutes)
+      else if (type === 'hours')
+        setSchedule((days + parseInt(value / 24)) * 1440 + (value % 24) * 60 + minutes)
+      else if (type === 'minutes')
+        setSchedule(
+          (days + parseInt((hours + (parseInt(value / 60) % 24)) / 24)) * 1440 +
+            (hours + (parseInt(value / 60) % 24)) * 60 +
+            (value % 60)
+        )
     },
-    [days, hours, minutes]
+    [schedule]
   )
 
-  const onChangeHours = useCallback(
-    (e) => {
-      let value = parseInt(e.target.value)
-      if (!value) value = 0
+  const onFocus = useCallback(
+    (e, type) => {
+      const days = parseInt(schedule / 1440)
+      const hours = parseInt((schedule - days * 1440) / 60)
+      const minutes = schedule % 60
 
-      setSchedule((days + parseInt(value / 24)) * 1440 + (value % 24) * 60 + minutes)
-      setDays((days + parseInt(value / 24)) % 99)
-      setHours(value % 99)
+      if (type === 'days') {
+        setSchedule(hours * 60 + minutes)
+      } else if (type === 'hours') {
+        setSchedule(days * 1440 + minutes)
+      } else if (type === 'minutes') {
+        setSchedule(days * 1440 + hours * 60)
+      }
     },
-    [days, hours, minutes]
+    [schedule]
   )
 
-  const onChangeDays = useCallback(
-    (e) => {
-      let value = parseInt(e.target.value)
-      if (!value) value = 0
-
-      setSchedule(value * 1440 + hours * 60 + minutes)
-      setDays(value % 99)
-    },
-    [days, hours, minutes]
-  )
-
-  const onFocusMinutes = useCallback(
-    (e) => {
-      setMinutes(0)
-      setSchedule(days * 1440 + hours * 60 + 0)
-      setInputMinutesFocused(true)
-    },
-    [days, hours, minutes]
-  )
-
-  const onFocusHours = useCallback(
-    (e) => {
-      setHours(0)
-      setSchedule(days * 1440 + minutes)
-      setInputHoursFocused(true)
-    },
-    [days, hours, minutes]
-  )
-
-  const onFocusDays = useCallback(
-    (e) => {
-      setDays(0)
-      setSchedule(hours * 60 + minutes)
-      setInputDaysFocused(true)
-    },
-    [days, hours, minutes]
-  )
+  const onBlur = useCallback((type) => {
+    if (type === 'days') setInputDaysFocused(false)
+    else if (type === 'hours') setInputHoursFocused(false)
+    else if (type === 'minutes') setInputMinutesFocused(false)
+  }, [])
 
   const handleWeel = useCallback(
     (e) => {
@@ -108,9 +81,6 @@ export default function useIgniLogic() {
       let newSchedule = e.deltaY < 0 ? schedule + 10 : schedule - 10
       newSchedule = newSchedule > 0 ? newSchedule : 0
       setSchedule(newSchedule)
-      setMinutes(newSchedule % 60)
-      setHours(parseInt((newSchedule / 60) % 24))
-      setDays(parseInt(parseInt((newSchedule / 60) % 24) / 24))
       setLastInputTime(Date.now())
     },
     [schedule, isIgnited]
@@ -153,36 +123,15 @@ export default function useIgniLogic() {
 
   const handleDoubleClick = useCallback(() => {
     if (isIgnited) return
-    const days = Math.floor(schedule / 1440)
-    const hours = schedule - days * 1440 > 60 ? Math.floor((schedule - days * 1440) / 60) : 0
-    const minutes = schedule - days * 1440 - hours * 60
-    setDays(days)
-    setHours(hours)
-    setMinutes(minutes)
     setClickedInput(true)
     setShouldDisplayTime(true)
   }, [schedule, isIgnited])
 
   const handleCampfireClick = useCallback(() => {
     if (isIgnited) return
-    if (clickedInput) {
-      setSchedule(days * 1440 + hours * 60 + minutes)
-    }
     setClickedInput(false)
     setShouldDisplayTime(false)
   }, [schedule, isIgnited, clickedInput])
-
-  const onBlurMinutes = useCallback(() => {
-    setInputMinutesFocused(false)
-  }, [])
-
-  const onBlurHours = useCallback(() => {
-    setInputHoursFocused(false)
-  }, [])
-
-  const onBlurDays = useCallback(() => {
-    setInputDaysFocused(false)
-  }, [])
 
   const flamePowerOfSchedule = useMemo(() => {
     let choosedSchedule = schedule
@@ -221,37 +170,9 @@ export default function useIgniLogic() {
   }, [flamePowerOfSchedule])
 
   const shouldDisplayTimeText = useMemo(
-    () => !(Date.now() - lastInputTime > 3000) || shouldDisplayTime || clickedInput,
-    [lastInputTime, shouldDisplayTime, clickedInput]
+    () => !(currentTime - lastInputTime > 3000) || shouldDisplayTime || clickedInput,
+    [lastInputTime, shouldDisplayTime, clickedInput, currentTime]
   )
-
-  useEffect(() => {
-    if (cliked) setTimeout(() => setCliked(false), 500)
-  }, [cliked])
-
-  useEffect(() => {
-    const iterval = setInterval(() => setCurrentTime(Date.now()), 1000)
-    return () => clearInterval(iterval)
-  }, [])
-
-  useEffect(() => {
-    ;(async () => {
-      const settings = await ipcRenderer.invoke('load-settings')
-      setIsIgnited(settings?.isIgnited)
-      setScheduleTime(settings?.schedule)
-      setSchedule(settings?.lastSchedule)
-      setSchedule(settings.schedule - Date.now() > 0 ? settings.schedule - Date.now() : 0)
-    })()
-  }, [])
-
-  useEffect(() => {
-    if (shloudRerender) setShloudRerender(false)
-  }, [shloudRerender])
-
-  useEffect(() => {
-    let timeout = setTimeout(() => setShloudRerender(true), 3000)
-    return () => clearTimeout(timeout)
-  }, [lastInputTime])
 
   const campfireCallbacks = useMemo(
     () => ({
@@ -274,32 +195,46 @@ export default function useIgniLogic() {
 
   const hoursCallbacks = useMemo(
     () => ({
-      onChangeHours,
-      onFocusHours,
-      onBlurHours
+      onChangeHours: (e) => onChange(e, 'hours'),
+      onFocusHours: (e) => onFocus(e, 'hours'),
+      onBlurHours: () => onBlur('hours')
     }),
-    [onChangeHours, onFocusHours, onBlurHours]
+    [onChange, onFocus, onBlur]
   )
 
   const daysCallbacks = useMemo(
     () => ({
-      onChangeDays,
-      onFocusDays,
-      onBlurDays
+      onChangeDays: (e) => onChange(e, 'days'),
+      onFocusDays: (e) => onFocus(e, 'days'),
+      onBlurDays: () => onBlur('days')
     }),
-    [onChangeDays, onFocusDays, onBlurDays]
+    [onChange, onFocus, onBlur]
   )
 
   const minutesCallbacks = useMemo(
     () => ({
-      onChangeMinutes,
-      onFocusMinutes,
-      onBlurMinutes
+      onChangeMinutes: (e) => onChange(e, 'minutes'),
+      onFocusMinutes: (e) => onFocus(e, 'minutes'),
+      onBlurMinutes: () => onBlur('minutes')
     }),
-    [onChangeMinutes, onFocusMinutes, onBlurMinutes]
+    [onChange, onFocus, onBlur]
   )
 
   const flameSrc = useMemo(() => flames[flamePowerOfSchedule - 1], [flamePowerOfSchedule])
+
+  useEffect(() => {
+    const iterval = setInterval(() => setCurrentTime(Date.now()), 1000)
+    return () => clearInterval(iterval)
+  }, [])
+
+  useEffect(() => {
+    ;(async () => {
+      const settings = await ipcRenderer.invoke('load-settings')
+      setIsIgnited(settings?.isIgnited)
+      setScheduleTime(settings?.schedule)
+      setSchedule(settings?.lastSchedule)
+    })()
+  }, [])
 
   return {
     hoursCallbacks,
@@ -316,11 +251,8 @@ export default function useIgniLogic() {
     flameSrc,
     haloSize,
     isIgnited,
-    days,
-    hours,
-    minutes,
     schedule,
-    cliked,
+    cliked: clikedCampfire,
     scheduleTime,
     clickedInput,
     shouldDisplayTimeText

@@ -1,6 +1,6 @@
 {
   "name": "igni",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "An app to shutdown your computer after a certain time",
   "main": "./out/main/index.js",
   "author": "lukylix",

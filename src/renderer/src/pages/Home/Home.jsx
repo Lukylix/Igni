@@ -1,3 +1,5 @@
+import { useMemo } from 'react'
+
 import rondin from '../../assets/rondin.png'
 import clouds from '../../assets/clouds.png'
 import log from '../../assets/log64.png'
@@ -22,9 +24,6 @@ function Home() {
     igniteToggle,
     haloSize,
     isIgnited,
-    days,
-    hours,
-    minutes,
     schedule,
     cliked,
     scheduleTime,
@@ -39,6 +38,10 @@ function Home() {
     inputHoursFocused,
     inputMinutesFocused
   } = useIgniLogic()
+
+  const days = useMemo(() => Math.floor(schedule / 1440), [schedule])
+  const hours = useMemo(() => Math.floor((schedule - days * 1440) / 60), [schedule, days])
+  const minutes = useMemo(() => schedule - days * 1440 - hours * 60, [schedule, days, hours])
 
   const {
     handleMouseUp,
