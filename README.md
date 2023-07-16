@@ -1,3 +1,7 @@
+<p align="center">
+<a href='https://ko-fi.com/lukylix' target='_blank'><img height='20' style='border:0px;height:46px;' src='https://az743702.vo.msecnd.net/cdn/kofi3.png?v=0' border='0' alt='Buy Me a Coffee '/>
+</p>
+
 # Welcome adventurer, 🍻
 
 Welcome to the realm of Igni, a pixel art-style application tailored to help you seamlessly schedule system shutdowns. With Igni, your quest for better power management and digital health is only a fingertip away. Dive into the world of pixel art while ensuring no more unnecessary power usage. Let Igni guide your journey towards an energy-efficient digital life.
